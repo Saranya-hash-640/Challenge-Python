@@ -1,0 +1,46 @@
+# 1. Take input from the user
+expression = input("Enter a string: ")
+
+# Custom stack implementation (Bonus)
+class Stack:
+    def __init__(self):
+        self.items = []
+    
+    def push(self, item):
+        self.items.append(item)
+    
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
+        return None
+    
+    def is_empty(self):
+        return len(self.items) == 0
+    
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        return None
+
+# Function to check balanced brackets
+def is_balanced(expr):
+    stack = Stack()
+    opening = "([{"
+    closing = ")]}"
+    pairs = {')': '(', ']': '[', '}': '{'}
+
+    for char in expr:
+        if char in opening:              # push opening brackets
+            stack.push(char)
+        elif char in closing:            # check closing brackets
+            top = stack.pop()
+            if top != pairs[char]:
+                return False
+
+    return stack.is_empty()              # must end empty to be balanced
+
+# 3. Print result
+if is_balanced(expression):
+    print("Balanced")
+else:
+    print("Not Balanced")
